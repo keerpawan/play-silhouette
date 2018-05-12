@@ -1,6 +1,0 @@
-# JVM options for building.
-
--Xms2048M
--Xmx2048M
--Xss6M
--XX:MaxPermSize=512M
