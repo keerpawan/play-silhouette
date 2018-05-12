@@ -8,6 +8,8 @@ version := "5.0.0"
 
 scalaVersion := "2.12.3"
 
+val slickVersion = "3.2.3"
+
 resolvers += Resolver.jcenterRepo
 
 resolvers += "Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
@@ -27,6 +29,11 @@ libraryDependencies ++= Seq(
   "com.enragedginger" %% "akka-quartz-scheduler" % "1.6.1-akka-2.5.x",
   "com.adrianhurt" %% "play-bootstrap" % "1.2-P26-B3",
   "com.mohiva" %% "play-silhouette-testkit" % "5.0.0" % "test",
+  "com.typesafe.slick" %% "slick" % slickVersion,
+  "org.slf4j" % "slf4j-nop" % "1.6.4",
+  "com.typesafe.slick" %% "slick-hikaricp" % "3.2.3",
+  "com.typesafe.play" %% "play-slick" % "3.0.0",
+  "com.typesafe.play" %% "play-slick-evolutions" % "3.0.0",
   specs2 % Test,
   ehcache,
   guice,
