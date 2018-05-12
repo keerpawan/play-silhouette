@@ -4,6 +4,29 @@ Silhouette Seed Template
 The Silhouette Seed project is an Activator template which shows how [Silhouette](https://github.com/mohiva/play-silhouette) can be implemented in a Play Framework application. It's a starting point which can be extended to fit your needs.
 Forked from https://github.com/mohiva/play-silhouette-seed.
 
+
+## Setup
+
+**1. Configure database**
+<br/>To configure the database update the file "~\conf\database.conf" and input your MySql setting:
+```
+slick.dbs.default.db.url = "jdbc:mysql://localhost/<database_name>"
+slick.dbs.default.db.user = "<database_username>"
+slick.dbs.default.db.password = "<database_password>"
+```
+
+**2. Get dependencies and compile**
+```
+$ sbt update
+$ sbt compile
+```
+
+**3. Run**
+<br/>Command will start the server on localhost:9000
+```
+$ sbt run
+```
+
 ## Example
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
