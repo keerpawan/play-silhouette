@@ -48,6 +48,7 @@
                             @if(u.loginInfo.providerID == com.mohiva.play.silhouette.impl.providers.CredentialsProvider.ID) {
                                 <li><a href="@controllers.routes.ChangePasswordController.view">@messages("change.password")</a></li>
                             }
+                            <li><a href="@controllers.routes.AdminController.list">@messages("user.list")</a></li>
                             <li><a href="@controllers.routes.ApplicationController.signOut">@messages("sign.out")</a></li>
                         }.getOrElse {
                             <li><a href="@controllers.routes.SignInController.view">@messages("sign.in")</a></li>

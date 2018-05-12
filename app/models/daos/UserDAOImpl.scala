@@ -3,11 +3,11 @@ package models.daos
 import java.util.UUID
 
 import com.mohiva.play.silhouette.api.LoginInfo
-import models.User
+import models.{ Subject, Role, Permission, User }
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import slick.dbio.DBIOAction
 import javax.inject.Inject
-
 import play.api.db.slick.DatabaseConfigProvider
 
 import scala.concurrent.Future
@@ -34,7 +34,8 @@ class UserDAOImpl @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     db.run(userQuery.result.headOption).map { dbUserOption =>
       dbUserOption.map { user =>
         User(UUID.fromString(user.userID), loginInfo, user.firstName, user.lastName, user.fullName, user.email,
-          user.avatarURL, user.activated)
+          user.avatarURL, user.activated,
+          Subject(user.userID, List(Role(1, "admin", None)), List(Permission("user.admin"))))
       }
     }
   }
@@ -62,7 +63,8 @@ class UserDAOImpl @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
             user.fullName,
             user.email,
             user.avatarURL,
-            user.activated)
+            user.activated,
+            Subject(user.userID, List(Role(1, "admin", None)), List(Permission("user.admin"))))
       }
     }
   }

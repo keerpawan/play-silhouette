@@ -1,11 +1,11 @@
 package models.services
 
 import java.util.UUID
-import javax.inject.Inject
 
+import javax.inject.Inject
 import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.impl.providers.CommonSocialProfile
-import models.User
+import models.{ Subject, User }
 import models.daos.UserDAO
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -69,7 +69,8 @@ class UserServiceImpl @Inject() (userDAO: UserDAO)(implicit ex: ExecutionContext
           fullName = profile.fullName,
           email = profile.email,
           avatarURL = profile.avatarURL,
-          activated = true
+          activated = true,
+          Subject("", List(), List())
         ))
     }
   }

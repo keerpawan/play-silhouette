@@ -1,5 +1,7 @@
 package modules
 
+import be.objectify.deadbolt.scala.DeadboltHandler
+import be.objectify.deadbolt.scala.cache.HandlerCache
 import com.google.inject.name.Named
 import com.google.inject.{ AbstractModule, Provides }
 import com.mohiva.play.silhouette.api.actions.{ SecuredErrorHandler, UnsecuredErrorHandler }
@@ -32,7 +34,7 @@ import play.api.Configuration
 import play.api.libs.openid.OpenIdClient
 import play.api.libs.ws.WSClient
 import play.api.mvc.CookieHeaderEncoding
-import utils.auth.{ CustomSecuredErrorHandler, CustomUnsecuredErrorHandler, DefaultEnv }
+import utils.auth._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -64,6 +66,10 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
 
     bind[Silhouette[DefaultEnv]].to[SilhouetteProvider[DefaultEnv]]
     bind[PasswordHasher].toInstance(new BCryptPasswordHasher)
+
+    // deadbolt integration
+    bind[DeadboltHandler].to[AuthHandler]
+    bind[HandlerCache].to[AuthHandlerCache]
   }
 
   /**

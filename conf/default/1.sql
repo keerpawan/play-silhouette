@@ -10,6 +10,21 @@ create table `oauth2info` (`id` BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,`acce
 create table `openidinfo` (`id` VARCHAR (255) NOT NULL PRIMARY KEY,`logininfoid` BIGINT NOT NULL);
 create table `openidattributes` (`id` VARCHAR (255) NOT NULL,`key` VARCHAR (255) NOT NULL,`value` VARCHAR (255) NOT NULL);
 
+# --- User permission tables
+
+create table `role` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `role` VARCHAR (255) NOT NULL,
+ `displayorder` INT NOT NULL,
+ CONSTRAINT uroles UNIQUE (`role`));
+
+create table `permission` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `permission` VARCHAR (255) NOT NULL, `roleid` INT NOT NULL,
+ CONSTRAINT fk_Permission_Role FOREIGN KEY (`roleid`) REFERENCES `role`(`id`),
+ CONSTRAINT rpermission UNIQUE (`permission`, `roleid`));
+
+
+create table `userrole` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `userid` VARCHAR (255) NOT NULL, `roleid` INT NOT NULL,
+ CONSTRAINT fk_Userrole_Role FOREIGN KEY (`roleid`) REFERENCES `role`(`id`),
+ CONSTRAINT fk_Userrole_User FOREIGN KEY (`userid`) REFERENCES `user`(`userID`),
+ CONSTRAINT uroles UNIQUE (`userid`, `roleid`));
 
 # --- !Downs
 
