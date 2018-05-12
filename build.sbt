@@ -34,6 +34,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick-hikaricp" % "3.2.3",
   "com.typesafe.play" %% "play-slick" % "3.0.0",
   "com.typesafe.play" %% "play-slick-evolutions" % "3.0.0",
+  "mysql" % "mysql-connector-java" % "5.1.38",
   specs2 % Test,
   ehcache,
   guice,
