@@ -38,7 +38,7 @@ class AdminController @Inject() (
   ex: ExecutionContext
 ) extends AbstractController(components) with I18nSupport {
 
-  def list = deadbolt.Pattern(value = "admin.user")() {
+  def list = deadbolt.Pattern(value = "user.admin")() {
     implicit request =>
       Future.successful(Ok(views.html.userAdmin()))
   }
