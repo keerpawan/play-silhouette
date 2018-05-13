@@ -44,9 +44,8 @@ class ApplicationController @Inject() (
    * @return The result to display.
    */
   def signOut = silhouette.SecuredAction.async { implicit request: SecuredRequest[DefaultEnv, AnyContent] =>
-    val result = Redirect(routes.ApplicationController.index())
     silhouette.env.eventBus.publish(LogoutEvent(request.identity, request))
-    silhouette.env.authenticatorService.discard(request.authenticator, result)
+    silhouette.env.authenticatorService.discard(request.authenticator, Ok(Json.obj("message" -> Messages("signout.successful"))))
   }
 
   def getToken = silhouette.UnsecuredAction.async { implicit request: Request[AnyContent] =>

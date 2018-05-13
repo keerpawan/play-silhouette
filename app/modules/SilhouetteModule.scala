@@ -24,7 +24,7 @@ import com.mohiva.play.silhouette.impl.services._
 import com.mohiva.play.silhouette.impl.util._
 import com.mohiva.play.silhouette.password.{ BCryptPasswordHasher, BCryptSha256PasswordHasher }
 import com.mohiva.play.silhouette.persistence.daos.{ DelegableAuthInfoDAO, InMemoryAuthInfoDAO }
-import com.mohiva.play.silhouette.persistence.repositories.DelegableAuthInfoRepository
+import com.mohiva.play.silhouette.persistence.repositories.{ CacheAuthenticatorRepository, DelegableAuthInfoRepository }
 import models.daos._
 import models.services.{ UserService, UserServiceImpl }
 import net.ceedubs.ficus.Ficus._
@@ -36,7 +36,11 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.CookieHeaderEncoding
 import utils.auth._
 import net.ceedubs.ficus.readers.EnumerationReader._
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.duration.Duration
+import scala.reflect.ClassTag
 
 /**
  * The Guice module which wires all Silhouette dependencies.
@@ -244,12 +248,13 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
     @Named("authenticator-crypter") crypter: Crypter,
     idGenerator: IDGenerator,
     configuration: Configuration,
-    clock: Clock): AuthenticatorService[JWTAuthenticator] = {
+    clock: Clock,
+    cacheLayer: CacheLayer): AuthenticatorService[JWTAuthenticator] = {
 
     val config = configuration.underlying.as[JWTAuthenticatorSettings]("silhouette.authenticator")
     val encoder = new CrypterAuthenticatorEncoder(crypter)
 
-    new JWTAuthenticatorService(config, None, encoder, idGenerator, clock)
+    new JWTAuthenticatorService(config, Some(new CacheAuthenticatorRepository[JWTAuthenticator](cacheLayer)), encoder, idGenerator, clock)
   }
 
   /**

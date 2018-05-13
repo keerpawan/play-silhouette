@@ -115,6 +115,35 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "signout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{jwtToken}}"
+					},
+					{
+						"key": "Csrf-Token",
+						"value": "{{csrfToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9000/signOut",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"signOut"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
