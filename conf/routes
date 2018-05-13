@@ -2,6 +2,9 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Csrf
+GET         /token                           controllers.ApplicationController.getToken
+
 # User Management
 GET         /users                           controllers.AdminController.list
 

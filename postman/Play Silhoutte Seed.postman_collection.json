@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "a6759546-c027-4069-a7da-c074f7fbf985",
+		"name": "Play Silhoutte Seed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f70ac7-f953-4f6f-b24b-ad8e0e408bb3",
+						"type": "text/javascript",
+						"exec": [
+							"tests['status should be 200'] = responseCode.code === 200;",
+							"const jsonResponseBody = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable('csrfToken', jsonResponseBody.value)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9000/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82a33a55-a35b-4291-9ce5-5c2754fdd59a",
+						"type": "text/javascript",
+						"exec": [
+							"tests['status should be 200'] = responseCode.code === 200;",
+							"const jsonResponseBody = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable('jwtToken', jsonResponseBody.token)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Csrf-Token",
+						"value": "{{csrfToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"email\": \"p@k\",\n \"password\": \"123\",\n \"rememberMe\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/signIn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"signIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{jwtToken}}"
+					},
+					{
+						"key": "Csrf-Token",
+						"value": "{{csrfToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "20e95970-e484-461c-9ad3-434fc7938833",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a349817e-7975-4eaf-aa5b-f202bc674409",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

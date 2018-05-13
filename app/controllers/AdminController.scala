@@ -11,8 +11,9 @@ import play.api.i18n.{ I18nSupport, Messages }
 import play.api.libs.mailer.{ Email, MailerClient }
 import play.api.mvc.{ AbstractController, AnyContent, ControllerComponents, Request }
 import utils.auth.DefaultEnv
-import be.objectify.deadbolt.scala.DeadboltActions
+import be.objectify.deadbolt.scala.{ AuthenticatedRequest, DeadboltActions }
 import play.api.libs.json.Json
+
 import scala.concurrent.{ ExecutionContext, Future }
 
 /**
@@ -21,8 +22,6 @@ import scala.concurrent.{ ExecutionContext, Future }
  * @param components       The Play controller components.
  * @param silhouette       The Silhouette stack.
  * @param userService      The user service implementation.
- * @param authTokenService The auth token service implementation.
- * @param mailerClient     The mailer client.
  * @param deadbolt         The deadbolt permissions.
  * @param ex               The execution context.
  */
@@ -30,8 +29,6 @@ class AdminController @Inject() (
   components: ControllerComponents,
   silhouette: Silhouette[DefaultEnv],
   userService: UserService,
-  authTokenService: AuthTokenService,
-  mailerClient: MailerClient,
   deadbolt: DeadboltActions
 )(
   implicit
@@ -40,6 +37,6 @@ class AdminController @Inject() (
 
   def list = deadbolt.Pattern(value = "user.admin")() {
     implicit request =>
-      Future.successful(Ok(views.html.userAdmin()))
+      Future.successful(Ok(Json.toJson("ALLOWED!!")))
   }
 }
